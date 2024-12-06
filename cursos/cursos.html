@@ -14,7 +14,7 @@
         .container {
             width: 80%;
             max-width: 1200px;
-            margin: 20px auto; /* Centraliza horizontalmente e ajusta o topo */
+            margin: 20px auto;
         }
         h1 {
             text-align: center;
@@ -26,27 +26,31 @@
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: center; /* Centraliza os cursos na grid */
-            margin-top: 20px; /* Distância do título */
+            justify-content: center;
+            margin-top: 20px;
         }
         .course-folder {
             width: 150px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .course-folder img {
-            width: 100px;
             height: 100px;
-            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #fff;
+            border: 2px solid #d96b9b;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
         .course-folder span {
-            display: block;
             font-size: 16px;
-            color: #333;
+            color: #d96b9b;
+            font-weight: bold;
         }
-        .course-folder:hover img {
-            transform: scale(1.1);
-            transition: 0.3s ease;
+        .course-folder:hover {
+            transform: scale(1.05);
+            background-color: #f9e1eb;
         }
         button {
             width: 100%;
@@ -62,14 +66,22 @@
         button:hover {
             background-color: #ba4e8f;
         }
+        .back-button {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .back-button button {
+            width: auto;
+            padding: 10px 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Cursos</h1>
-        <!-- Botão comentado
-        <button onclick="window.location.href = '/add-curso.html';">Adicionar Curso</button>
-        -->
+        <div class="back-button">
+            <button onclick="window.location.href = '/menu/menu.html';">Voltar ao Menu</button>
+        </div>
         <div class="courses-grid" id="courses-grid"></div>
     </div>
     <script>
@@ -79,7 +91,7 @@
                 const cursos = await response.json();
 
                 const coursesGrid = document.getElementById('courses-grid');
-                coursesGrid.innerHTML = ''; 
+                coursesGrid.innerHTML = '';
 
                 cursos.forEach(curso => {
                     const div = document.createElement('div');
@@ -87,12 +99,7 @@
                     div.onclick = () => verAlunos(curso.id);
 
                     div.innerHTML = `
-                        <img src="/assets/images/curso${curso.id}-icon.png" alt="${curso.nome}">
                         <span>${curso.nome}</span>
-                        <!--
-                        <button onclick="editarCurso(${curso.id})">Editar</button>
-                        <button onclick="excluirCurso(${curso.id})">Excluir</button>
-                        -->
                     `;
                     coursesGrid.appendChild(div);
                 });
@@ -103,14 +110,6 @@
 
         function verAlunos(cursoId) {
             window.location.href = `/alunos/alunos.html?curso_id=${cursoId}`;
-        }
-
-        function editarCurso(cursoId) {
-            alert(`Editar curso: ${cursoId}`);
-        }
-
-        function excluirCurso(cursoId) {
-            alert(`Excluir curso: ${cursoId}`);
         }
 
         carregarCursos();
