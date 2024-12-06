@@ -12,7 +12,7 @@
             margin: 0;
         }
         .container {
-            width: 80%;
+            width: 90%;
             max-width: 1200px;
             margin: 20px auto;
         }
@@ -22,6 +22,23 @@
             font-size: 36px;
             color: #d96b9b;
         }
+        .back-button {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .back-button button {
+            width: auto;
+            padding: 10px 20px;
+            background-color: #d96b9b;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .back-button button:hover {
+            background-color: #ba4e8f;
+        }
         .courses-grid {
             display: flex;
             flex-wrap: wrap;
@@ -30,49 +47,30 @@
             margin-top: 20px;
         }
         .course-folder {
-            width: 150px;
-            height: 100px;
+            width: 180px;
+            height: 140px;
+            background: linear-gradient(145deg, #f0d8df, #ffffff);
+            border-radius: 12px;
+            box-shadow: 8px 8px 16px #d3c3c8, -8px -8px 16px #ffffff;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            background-color: #fff;
-            border: 2px solid #d96b9b;
-            border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .course-folder span {
-            font-size: 16px;
+            font-size: 18px;
             color: #d96b9b;
             font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            word-wrap: break-word;
         }
         .course-folder:hover {
-            transform: scale(1.05);
-            background-color: #f9e1eb;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #d96b9b;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #ba4e8f;
-        }
-        .back-button {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .back-button button {
-            width: auto;
-            padding: 10px 20px;
+            transform: scale(1.1);
+            box-shadow: 12px 12px 20px #d3c3c8, -12px -12px 20px #ffffff;
+            background: linear-gradient(145deg, #ffd8e6, #ffffff);
         }
     </style>
 </head>
@@ -80,7 +78,7 @@
     <div class="container">
         <h1>Cursos</h1>
         <div class="back-button">
-            <button onclick="window.location.href = '/menu/menu.html';">Voltar ao Menu</button>
+            <button onclick="window.location.href = '/login/menu.html';">Voltar ao Menu</button>
         </div>
         <div class="courses-grid" id="courses-grid"></div>
     </div>
