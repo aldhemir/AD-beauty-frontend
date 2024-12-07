@@ -46,7 +46,6 @@
         button {
             width: 100%;
             padding: 12px;
-            background-color: #d96b9b;
             border: none;
             border-radius: 5px;
             color: white;
@@ -54,8 +53,18 @@
             cursor: pointer;
             margin-top: 15px;
         }
-        button:hover {
+        .save-button {
+            background-color: #d96b9b;
+        }
+        .save-button:hover {
             background-color: #ba4e8f;
+        }
+        .cancel-button {
+            background-color: #ccc;
+            margin-top: 10px;
+        }
+        .cancel-button:hover {
+            background-color: #aaa;
         }
     </style>
 </head>
@@ -77,14 +86,15 @@
             <input type="date" id="data_curso" placeholder="Data do Curso">
             <input type="number" id="sinal" placeholder="Sinal (Valor Pago)">
             <input type="number" id="valor" placeholder="Valor Total">
-            <div class="checkbox-container">
+            <div>
                 <label for="presente">Presente:</label>
                 <input type="text" id="presente" placeholder="Digite se está presente ou outro detalhe">
             </div>
             <input type="text" id="vendedora" placeholder="Vendedora">
             <input type="text" id="formas_pagamento" placeholder="Formas de Pagamento">
             <textarea id="observacao" placeholder="Observação"></textarea>
-            <button type="submit">Salvar</button>
+            <button type="submit" class="save-button">Salvar</button>
+            <button type="button" class="cancel-button" id="cancelar">Cancelar</button>
         </form>
     </div>
 
@@ -152,6 +162,11 @@
                 alert(error.message);
                 console.error('Erro ao salvar:', error);
             }
+        });
+
+        // Evento do botão de cancelar
+        document.getElementById('cancelar').addEventListener('click', () => {
+            window.location.href = '/cursos/cursos.html';
         });
     </script>
 </body>
