@@ -43,15 +43,6 @@
             box-sizing: border-box;
             font-size: 16px;
         }
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .checkbox-container input[type="checkbox"] {
-            margin-left: 10px;
-            gap: 8px;
-        }
         button {
             width: 100%;
             padding: 12px;
@@ -82,14 +73,13 @@
             <label for="curso">Curso:</label>
             <select id="curso" required>
                 <option value="" disabled selected>Selecione um curso</option>
-                <!-- Opções de cursos serão adicionadas dinamicamente -->
             </select>
             <input type="date" id="data_curso" placeholder="Data do Curso">
             <input type="number" id="sinal" placeholder="Sinal (Valor Pago)">
             <input type="number" id="valor" placeholder="Valor Total">
             <div class="checkbox-container">
                 <label for="presente">Presente:</label>
-                <input type="checkbox" id="presente">
+                <input type="text" id="presente" placeholder="Digite se está presente ou outro detalhe">
             </div>
             <input type="text" id="vendedora" placeholder="Vendedora">
             <input type="text" id="formas_pagamento" placeholder="Formas de Pagamento">
@@ -100,7 +90,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Preencher o dropdown de cursos dinamicamente (exemplo de fetch ao backend)
             fetch('https://ad-beauty-backend.onrender.com/cursos')
                 .then(response => {
                     if (!response.ok) throw new Error('Erro ao carregar os cursos');
@@ -122,18 +111,18 @@
             event.preventDefault();
 
             const aluno = {
-                id: document.getElementById('id').value,  // Incluindo o ID para a edição
+                id: document.getElementById('id').value,
                 nome: document.getElementById('nome').value.trim(),
                 sobrenome: document.getElementById('sobrenome').value.trim(),
                 telefone: document.getElementById('telefone').value.trim() || null,
                 data_nascimento: document.getElementById('data_nascimento').value.trim() || null,
                 cpf: document.getElementById('cpf').value.trim() || null,
                 email: document.getElementById('email').value.trim() || null,
-                curso_id: document.getElementById('curso').value, // Agora usando o select
+                curso_id: document.getElementById('curso').value,
                 data_curso: document.getElementById('data_curso').value.trim() || null,
                 sinal: parseFloat(document.getElementById('sinal').value) || 0,
                 valor: parseFloat(document.getElementById('valor').value) || 0,
-                presente: document.getElementById('presente').checked,
+                presente: document.getElementById('presente').value.trim() || null,
                 vendedora: document.getElementById('vendedora').value.trim() || null,
                 formas_pagamento: document.getElementById('formas_pagamento').value.trim() || null,
                 observacao: document.getElementById('observacao').value.trim() || null,
