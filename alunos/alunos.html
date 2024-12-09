@@ -8,38 +8,34 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #fff5f8;
+            background-color: #f9f1f5;
             margin: 0;
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 10px;
         }
         .container {
             width: 100%;
             max-width: 1200px;
             background-color: #fff;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow-x: auto; /* Garante que a tabela role em dispositivos menores */
         }
         h1 {
             text-align: center;
             font-family: 'Sacramento', cursive;
             font-size: 36px;
-            color: #d07fa2;
+            color: #d96b9b;
             margin-bottom: 20px;
-        }
-        .search-container {
-            margin-bottom: 20px;
-        }
-        .search-bar {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #d07fa2;
-            font-size: 16px;
         }
         .buttons {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 10px;
             margin-bottom: 20px;
         }
         button {
@@ -54,36 +50,96 @@
         button:hover {
             background-color: #ba4e8f;
         }
+        .search-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 250px;
+            font-size: 16px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin-top: 20px;
+            table-layout: fixed; /* Impede que a tabela ultrapasse o tamanho da tela */
         }
         th, td {
             padding: 12px;
-            text-align: left;
-            border: 1px solid #d96b9b;
+            text-align: center;
+            border: 1px solid #ddd;
+            word-wrap: break-word; /* Quebra de texto longo */
         }
         th {
             background-color: #d96b9b;
             color: white;
         }
         tr:nth-child(even) {
-            background-color: #fcecf1;
+            background-color: #f2f2f2;
         }
-        .section-title {
-            background-color: #fadce6;
-            font-weight: bold;
-            text-align: center;
-            color: #d96b9b;
+        tr:hover {
+            background-color: #e0e0e0;
         }
         .actions {
             display: flex;
-            gap: 10px;
+            flex-direction: column; /* Coloca os botões em uma coluna */
+            align-items: center; /* Centraliza os botões */
+            gap: 5px; /* Espaçamento entre os botões */
         }
         .actions button {
-            font-size: 14px;
             padding: 5px 10px;
+            font-size: 14px;
+            background-color: #d96b9b;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            width: 100%; /* Faz com que os botões ocupem toda a largura disponível */
+        }
+        .actions button:hover {
+            background-color: #ba4e8f;
+        }
+
+        /* Estilos para dispositivos pequenos */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+                display: block;
+                overflow-x: auto; /* Adiciona a rolagem horizontal */
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .buttons button {
+                font-size: 14px;
+            }
+        }
+
+        /* Estilos para dispositivos muito pequenos (como celulares) */
+        @media (max-width: 480px) {
+            th, td {
+                font-size: 12px;
+            }
+
+            .buttons button {
+                padding: 8px 15px;
+            }
+
+            .actions button {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+
+            table {
+                font-size: 10px; /* Reduz o tamanho da fonte para telas pequenas */
+            }
         }
     </style>
 </head>
@@ -99,16 +155,12 @@
         <!-- Botões -->
         <div class="buttons">
             <button onclick="window.location.href = '/add-aluno/addAluno.html';">Adicionar Aluno</button>
-            <button onclick="window.location.href = '/cursos/cursos.html';">Voltar para Cursos</button>
+            <button onclick="window.location.href = '/cursos/cursos.html';">Voltar para Cursos</button> <!-- Botão de Voltar para Cursos -->
             <button onclick="exportarCSV();">Exportar CSV</button>
         </div>
 
-        <!-- Tabela de Alunos -->
         <table id="alunos-table">
             <thead>
-                <tr class="section-title">
-                    <th colspan="12">Alunos Cadastrados</th>
-                </tr>
                 <tr>
                     <th>Nome</th>
                     <th>Telefone</th>
@@ -125,12 +177,13 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- As linhas de alunos serão preenchidas dinamicamente -->
+                <!-- As linhas de alunos serão preenchidas aqui -->
             </tbody>
         </table>
     </div>
 
     <script>
+        // Função para carregar os alunos
         async function carregarAlunos() {
             const cursoId = new URLSearchParams(window.location.search).get('curso_id');
             if (!cursoId) {
@@ -140,12 +193,19 @@
 
             try {
                 const response = await fetch(`https://ad-beauty-backend.onrender.com/alunos/curso/${cursoId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar alunos');
+                }
+
                 const alunos = await response.json();
                 const alunosTable = document.getElementById('alunos-table').getElementsByTagName('tbody')[0];
                 alunosTable.innerHTML = '';
 
                 if (alunos.length === 0) {
-                    alunosTable.innerHTML = `<tr><td colspan="12" class="section-title">Nenhum aluno cadastrado neste curso.</td></tr>`;
+                    const row = alunosTable.insertRow();
+                    const cell = row.insertCell();
+                    cell.colSpan = 12;
+                    cell.textContent = 'Nenhum aluno cadastrado neste curso.';
                     return;
                 }
 
@@ -170,22 +230,52 @@
                     `;
                 });
             } catch (error) {
-                alert('Erro ao carregar alunos.');
+                alert(error.message);
             }
         }
 
+        // Função para excluir um aluno
+        async function excluirAluno(alunoId) {
+            const response = await fetch(`https://ad-beauty-backend.onrender.com/alunos/excluir/${alunoId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                alert('Aluno excluído com sucesso');
+                window.location.reload();
+            }
+        }
+
+        // Função para editar um aluno (fazendo a requisição PUT)
+        async function editarAluno(id) {
+            window.location.href = `/add-aluno/addAluno.html?id=${id}`;
+        }
+
+        // Função para exportar os dados em CSV (ainda precisa ser implementada)
+        function exportarCSV() {
+            alert('Exportar CSV ainda não implementado');
+        }
+
+        // Função para filtrar alunos com base na pesquisa
         function filtrarAlunos() {
             const input = document.getElementById('searchInput');
             const filter = input.value.toLowerCase();
             const rows = document.getElementById('alunos-table').getElementsByTagName('tr');
 
-            for (let i = 2; i < rows.length; i++) {
+            for (let i = 1; i < rows.length; i++) {
                 const cells = rows[i].getElementsByTagName('td');
-                const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(filter));
+                let match = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j] && cells[j].textContent.toLowerCase().includes(filter)) {
+                        match = true;
+                        break;
+                    }
+                }
                 rows[i].style.display = match ? '' : 'none';
             }
         }
 
+        // Carrega os alunos quando a página for carregada
         carregarAlunos();
     </script>
 </body>
