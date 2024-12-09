@@ -55,11 +55,14 @@
             justify-content: flex-end;
             margin-bottom: 20px;
         }
+        .search-container {
+            margin-bottom: 20px;
+        }
         .search-bar {
-            padding: 8px 16px;
+            width: 100%;
+            padding: 10px;
             border-radius: 5px;
-            border: 1px solid #ddd;
-            width: 250px;
+            border: 1px solid #d07fa2;
             font-size: 16px;
         }
         table {
@@ -141,6 +144,19 @@
                 font-size: 10px; /* Reduz o tamanho da fonte para telas pequenas */
             }
         }
+        
+        td, th {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #d96b9b;
+            white-space: nowrap; /* Impede quebras de linha */
+        }
+
+        td:last-child {
+            white-space: normal; /* Permite quebras de linha apenas na última coluna (Observações) */
+            word-break: break-word; /* Garante quebra para textos longos */
+        }
+
     </style>
 </head>
 <body>
