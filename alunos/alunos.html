@@ -23,7 +23,7 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow-x: auto;
+            overflow-x: auto; /* Garante que a tabela role em dispositivos menores */
         }
         h1 {
             text-align: center;
@@ -51,6 +51,11 @@
             background-color: #ba4e8f;
         }
         .search-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .search-container {
             margin-bottom: 20px;
         }
         .search-bar {
@@ -70,22 +75,11 @@
             padding: 12px;
             text-align: center;
             border: 1px solid #ddd;
-            word-wrap: break-word;
+            word-wrap: break-word; /* Quebra de texto longo */
         }
         th {
             background-color: #d96b9b;
             color: white;
-        }
-        td {
-            white-space: nowrap;
-        }
-        td:last-child, th:last-child {
-            width: 300px; /* Define largura maior para observações */
-            white-space: normal; /* Permite quebra de linha */
-            word-break: break-word; /* Quebra palavras longas */
-        }
-        td:nth-child(4), th:nth-child(4) {
-            white-space: nowrap; /* CPF sempre na mesma linha */
         }
         tr:nth-child(even) {
             background-color: #f2f2f2;
@@ -95,9 +89,9 @@
         }
         .actions {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
+            flex-direction: column; /* Coloca os botões em uma coluna */
+            align-items: center; /* Centraliza os botões */
+            gap: 5px; /* Espaçamento entre os botões */
         }
         .actions button {
             padding: 5px 10px;
@@ -107,40 +101,47 @@
             border-radius: 5px;
             color: white;
             cursor: pointer;
-            width: 100%;
+            width: 100%; /* Faz com que os botões ocupem toda a largura disponível */
         }
         .actions button:hover {
             background-color: #ba4e8f;
         }
 
+        /* Estilos para dispositivos pequenos */
         @media (max-width: 768px) {
             table {
                 font-size: 14px;
                 display: block;
-                overflow-x: auto;
+                overflow-x: auto; /* Adiciona a rolagem horizontal */
             }
+
             th, td {
                 padding: 10px;
                 font-size: 12px;
             }
+
             .buttons button {
                 font-size: 14px;
             }
         }
 
+        /* Estilos para dispositivos muito pequenos (como celulares) */
         @media (max-width: 480px) {
             th, td {
                 font-size: 12px;
             }
+
             .buttons button {
                 padding: 8px 15px;
             }
+
             .actions button {
                 font-size: 12px;
                 padding: 4px 8px;
             }
+
             table {
-                font-size: 10px;
+                font-size: 10px; /* Reduz o tamanho da fonte para telas pequenas */
             }
         }
     </style>
