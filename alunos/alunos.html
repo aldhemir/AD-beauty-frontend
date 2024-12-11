@@ -75,7 +75,7 @@
             padding: 12px;
             text-align: center;
             border: 1px solid #ddd;
-            word-wrap: break-word; /* Quebra de texto longo */
+            word-break: break-word; /* Garante que o texto seja quebrado corretamente */
         }
         th {
             background-color: #d96b9b;
@@ -106,7 +106,7 @@
         .actions button:hover {
             background-color: #ba4e8f;
         }
-
+    
         /* Estilos para dispositivos pequenos */
         @media (max-width: 768px) {
             table {
@@ -114,37 +114,38 @@
                 display: block;
                 overflow-x: auto; /* Adiciona a rolagem horizontal */
             }
-
+    
             th, td {
                 padding: 10px;
                 font-size: 12px;
             }
-
+    
             .buttons button {
                 font-size: 14px;
             }
         }
-
+    
         /* Estilos para dispositivos muito pequenos (como celulares) */
         @media (max-width: 480px) {
             th, td {
                 font-size: 12px;
             }
-
+    
             .buttons button {
                 padding: 8px 15px;
             }
-
+    
             .actions button {
                 font-size: 12px;
                 padding: 4px 8px;
             }
-
+    
             table {
                 font-size: 10px; /* Reduz o tamanho da fonte para telas pequenas */
             }
         }
     </style>
+    
 </head>
 <body>
     <div class="container">
