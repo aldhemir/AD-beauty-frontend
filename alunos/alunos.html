@@ -69,13 +69,17 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: fixed; /* Impede que a tabela ultrapasse o tamanho da tela */
+            table-layout: auto; /* Ajusta automaticamente o tamanho das colunas */
         }
         th, td {
             padding: 12px;
             text-align: center;
             border: 1px solid #ddd;
-            word-break: break-word; /* Garante que o texto seja quebrado corretamente */
+            white-space: nowrap; /* Impede quebra de linha */
+        }
+        td:nth-child(11) { /* Apenas para a coluna "Observação" */
+            white-space: normal; /* Permite quebra de linha na observação */
+            word-wrap: break-word; /* Garante que textos longos sejam quebrados */
         }
         th {
             background-color: #d96b9b;
@@ -106,7 +110,7 @@
         .actions button:hover {
             background-color: #ba4e8f;
         }
-    
+
         /* Estilos para dispositivos pequenos */
         @media (max-width: 768px) {
             table {
@@ -114,32 +118,32 @@
                 display: block;
                 overflow-x: auto; /* Adiciona a rolagem horizontal */
             }
-    
+
             th, td {
                 padding: 10px;
                 font-size: 12px;
             }
-    
+
             .buttons button {
                 font-size: 14px;
             }
         }
-    
+
         /* Estilos para dispositivos muito pequenos (como celulares) */
         @media (max-width: 480px) {
             th, td {
                 font-size: 12px;
             }
-    
+
             .buttons button {
                 padding: 8px 15px;
             }
-    
+
             .actions button {
                 font-size: 12px;
                 padding: 4px 8px;
             }
-    
+
             table {
                 font-size: 10px; /* Reduz o tamanho da fonte para telas pequenas */
             }
