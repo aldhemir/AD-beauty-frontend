@@ -233,7 +233,7 @@
                         <td>${aluno.formas_pagamento}</td>
                         <td>${aluno.observacao || 'Sem observações'}</td>
                         <td class="actions">
-                            
+                            <button onclick="editarAluno(${aluno.id})">Editar</button>
                             <button onclick="excluirAluno(${aluno.id})">Excluir</button>
                         </td>
                     `;
