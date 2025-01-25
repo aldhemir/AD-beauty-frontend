@@ -116,22 +116,43 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('https://ad-beauty-backend.onrender.com/cursos')
-                .then(response => {
-                    if (!response.ok) throw new Error('Erro ao carregar os cursos');
-                    return response.json();
-                })
-                .then(cursos => {
-                    const selectCurso = document.getElementById('curso');
-                    cursos.forEach(curso => {
-                        const option = document.createElement('option');
-                        option.value = curso.id;
-                        option.textContent = curso.nome;
-                        selectCurso.appendChild(option);
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const alunoId = urlParams.get('id'); // Obtém o ID do aluno da URL
+            
+            // Carregar lista de cursos
+            try {
+                const response = await fetch('https://ad-beauty-backend.onrender.com/cursos');
+                if (!response.ok) throw new Error('Erro ao carregar os cursos');
+                const cursos = await response.json();
+                const selectCurso = document.getElementById('curso');
+                cursos.forEach(curso => {
+                    const option = document.createElement('option');
+                    option.value = curso.id;
+                    option.textContent = curso.nome;
+                    selectCurso.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar cursos:', error);
+            }
+
+            // Se for edição, carregar dados do aluno
+            if (alunoId) {
+                document.getElementById('titulo').textContent = 'Editar Aluno'; // Atualiza o título
+                try {
+                    const response = await fetch(`https://ad-beauty-backend.onrender.com/alunos/${alunoId}`);
+                    if (!response.ok) throw new Error('Erro ao carregar os dados do aluno');
+                    const aluno = await response.json();
+
+                    // Preenche os campos com os dados do aluno
+                    Object.keys(aluno).forEach(key => {
+                        const field = document.getElementById(key);
+                        if (field) field.value = aluno[key] || '';
                     });
-                })
-                .catch(error => console.error('Erro ao carregar cursos:', error));
+                } catch (error) {
+                    console.error('Erro ao carregar dados do aluno:', error);
+                }
+            }
         });
 
         document.getElementById('formAluno').addEventListener('submit', async (event) => {
@@ -154,8 +175,6 @@
                 formas_pagamento: document.getElementById('formas_pagamento').value.trim() || null,
                 observacao: document.getElementById('observacao').value.trim() || null,
             };
-
-            console.log("Dados do aluno sendo enviados:", aluno);
 
             const url = aluno.id ? `https://ad-beauty-backend.onrender.com/alunos/editar/${aluno.id}` : 'https://ad-beauty-backend.onrender.com/add-aluno';
             const method = aluno.id ? 'PUT' : 'POST';
